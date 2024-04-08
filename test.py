@@ -1,15 +1,15 @@
-import requests
+# import requests
 
-password = "123"
-text = "фывфыв"
+# password = "123"
+# text = "фывфыв"
 
-ip = 'localhost:10000'
+# ip = 'localhost:10000'
 
-url = f'http://{ip}/'
+# url = f'http://{ip}/'
 
-headers = {
-    'Content-Type': 'application/json',
-}
+# headers = {
+#     'Content-Type': 'application/json',
+# }
 
-data = {'password': password, 'text': text}
-response = requests.post(url, headers=headers, json=data)   
+# data = {'password': password, 'text': text}
+# response = requests.post(url, headers=headers, json=data)   

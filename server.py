@@ -1,12 +1,16 @@
-from win11toast import toast
+from win11toast import toast as toastt
 import http.server
 import socketserver
 import os
 import json
 import webbrowser
+conf = json.load(open('config.json'))
+def toast(text):
+    if conf["toasts"]:
+        toastt(text)
 
 # Глобальная переменная для хранения пароля
-PASSWORD = "123"
+PASSWORD = conf["password"]
 
 # Класс обработчика HTTP-запросов
 class MyHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
@@ -45,7 +49,7 @@ class MyHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 def start_server():
     # Создайте сервер HTTP
     toast("Server started")
-    port = 10000
+    port = conf["port"]
     httpd = socketserver.TCPServer(("", port), MyHTTPRequestHandler)
 
     # Запустите сервер

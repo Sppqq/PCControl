@@ -1,0 +1,8 @@
+win11toast
+http
+socketserver
+json
+webbrowser
+colorama
+winreg
+requests

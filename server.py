@@ -5,9 +5,9 @@ import os
 import json
 import webbrowser
 conf = json.load(open('config.json'))
-def toast(text):
+def toast(*args):
     if conf["toasts"]:
-        toastt(text)
+        toastt(*args)
 
 # Глобальная переменная для хранения пароля
 PASSWORD = conf["password"]

@@ -14,9 +14,14 @@ def start_server():
     subprocess.Popen(["python", server_script], creationflags=subprocess.CREATE_NO_WINDOW)
 
 def ext():
-    server_script = os.path.join(os.path.dirname(__file__), "stop.py")
+    server_script = os.path.join(os.path.dirname(__file__), "stop.bat")
     
-    subprocess.Popen(["python", server_script], creationflags=subprocess.CREATE_NO_WINDOW)
+    subprocess.Popen([server_script], creationflags=subprocess.CREATE_NO_WINDOW)
+
+def restart():
+    restart_script = os.path.join(os.path.dirname(__file__), "restart.bat")
+    
+    subprocess.Popen([restart_script], creationflags=subprocess.CREATE_NO_WINDOW)
 
 # Создайте значок
 icon = Image.open("icon.ico")
@@ -25,6 +30,7 @@ icon = Image.open("icon.ico")
 menu = pystray.Menu(
     # pystray.MenuItem("Start Server", start_server),
     pystray.MenuItem("Exit", ext),
+    pystray.MenuItem("Restart", restart),
 )
 
 start_server()

@@ -34,7 +34,7 @@ This project provides a way to control your PC remotely using HTTP requests. You
 ## Requirements
 
 * **Python 3.x:** Ensure you have Python 3 installed on your system.
-* **Required libraries:** Install the necessary libraries using the command "pip install -r requirements.txt". The required libraries are:
+* **Required libraries:** Install the necessary libraries using the command `pip install -r requirements.txt`. The required libraries are:
     * `win11toast`: For displaying toast notifications.
     * `http`: For creating the HTTP server.
     * `socketserver`: For handling network connections.

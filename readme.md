@@ -34,7 +34,7 @@ This project provides a way to control your PC remotely using HTTP requests. You
 ## Requirements
 
 * **Python 3.x:** Ensure you have Python 3 installed on your system.
-* **Required libraries:** Install the necessary libraries using the command `pip install -r requirements.txt`. The required libraries are:
+* **Required libraries:** Install the necessary libraries using the command "pip install -r requirements.txt". The required libraries are:
     * `win11toast`: For displaying toast notifications.
     * `http`: For creating the HTTP server.
     * `socketserver`: For handling network connections.
@@ -48,7 +48,7 @@ This project provides a way to control your PC remotely using HTTP requests. You
 
 1. **Clone the repository:** Use the command `git clone https://github.com/Sppqq/PCControl` to download the project files to your PC.
 2. **Install dependencies:** Navigate to the project directory and run `pip install -r requirements.txt` to install the required libraries.
-3. **Run the start tray script:** Execute `python start_tray.py` to start the server and create a tray icon for control.
+3. **Run the start tray script:** Execute "python start_tray.py" to start the server and create a tray icon for control.
 
 ![Tray Icon](https://cdn.discordapp.com/attachments/1045023444980473958/1226890642555146300/image.png?ex=662669f3&is=6613f4f3&hm=1ba37e2955dcd0405e59918dc638dc0b83db870362da882b5cc90cdd8774d4c2&)
 
@@ -80,7 +80,7 @@ This project provides a way to control your PC remotely using HTTP requests. You
 
 ### Controlling PC Actions
 
-1. **Prepare the JSON data:** Similar to sending messages, create a JSON object with your password and a specific keyword in the `text` field to trigger an action:
+1. **Prepare the JSON data:** Similar to sending messages, create a JSON object with your password and a specific keyword in the "text" field to trigger an action:
 
 ```json
 {
@@ -113,7 +113,7 @@ This project provides a way to control your PC remotely using HTTP requests. You
 
 ## Additional Notes
 
-* **Apple Shortcut Integration:** Requires downloading a specific shortcut from the GitHub repository for easy control from your iPhone. [here](https://www.icloud.com/shortcuts/8e2b513cecbe49aeb71407cee164bf35)
+* **Apple Shortcut Integration:** Requires downloading a specific shortcut from the GitHub repository for easy control from your iPhone. [here](https://www.icloud.com/shortcuts/890fc220ea354f9a90f02bade2189f81)
 * **Custom URL for `br` command:** You can modify the URL opened by the "br" command in the "server.py" file.
 
 ## Disclaimer

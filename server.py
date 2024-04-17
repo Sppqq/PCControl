@@ -1,94 +1,83 @@
-from win11toast import toast as toastt
+from win11toast import toast as toastt  # Import the toast notification library
 import http.server
 import socketserver
 import os
 import json
 import webbrowser
 import subprocess
+
+# Load configuration from config.json
 conf = json.load(open('config.json'))
+
+# Function to display toast notifications if enabled in config
 def toast(*args):
     if conf["toasts"]:
         toastt(*args)
 
-# Глобальная переменная для хранения пароля
+# Global variable to store the password from config
 PASSWORD = conf["password"]
 
-def convert_cr866_to_utf8(input_text):
-    """
-    Converts CR866 (CP866) encoded text to UTF-8.
-    
-    Args:
-        input_text (str): The input text in CR866 encoding.
-        
-    Returns:
-        str: The converted text in UTF-8 encoding.
-    """
-    # Define the CR866 to UTF-8 mapping
-    cr866_to_utf8 = {
-        '\u0410': 'А', '\u0411': 'Б', '\u0412': 'В', '\u0413': 'Г',
-        '\u0414': 'Д', '\u0415': 'Е', '\u0416': 'Ж', '\u0417': 'З',
-        '\u0418': 'И', '\u0419': 'Й', '\u041A': 'К', '\u041B': 'Л',
-        '\u041C': 'М', '\u041D': 'Н', '\u041E': 'О', '\u041F': 'П',
-        '\u0420': 'Р', '\u0421': 'С', '\u0422': 'Т', '\u0423': 'У',
-        '\u0424': 'Ф', '\u0425': 'Х', '\u0426': 'Ц', '\u0427': 'Ч',
-        '\u0428': 'Ш', '\u0429': 'Щ', '\u042A': 'Ъ', '\u042B': 'Ы',
-        '\u042C': 'Ь', '\u042D': 'Э', '\u042E': 'Ю', '\u042F': 'Я',
-        '\u0430': 'а', '\u0431': 'б', '\u0432': 'в', '\u0433': 'г',
-        '\u0434': 'д', '\u0435': 'е', '\u0436': 'ж', '\u0437': 'з',
-        '\u0438': 'и', '\u0439': 'й', '\u043A': 'к', '\u043B': 'л',
-        '\u043C': 'м', '\u043D': 'н', '\u043E': 'о', '\u043F': 'п',
-        '\u0440': 'р', '\u0441': 'с', '\u0442': 'т', '\u0443': 'у',
-        '\u0444': 'ф', '\u0445': 'х', '\u0446': 'ц', '\u0447': 'ч',
-        '\u0448': 'ш', '\u0449': 'щ', '\u044A': 'ъ', '\u044B': 'ы',
-        '\u044C': 'ь', '\u044D': 'э', '\u044E': 'ю', '\u044F': 'я'
-    }
-    
-    # Convert the input text using the mapping
-    output_text = ''.join(cr866_to_utf8.get(char, char) for char in input_text)
-    return output_text
-
-
-# Класс обработчика HTTP-запросов
+# Class to handle HTTP requests
 class MyHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
     def do_POST(self):
-        # Получите длину тела запроса
+        # Get the request body length
         content_length = int(self.headers["Content-Length"])
 
-        # Прочитайте тело запроса
+        # Read the request body
         request_body = self.rfile.read(content_length).decode()
         request_body = json.loads(request_body)
 
-        # Проверьте пароль
+        # Check the password
         password = request_body["password"]
         if password != PASSWORD:
-            self.send_error(401, "Unauthorized")
+            self.send_error(401, "Unauthorized")  # Send error if password is incorrect
             return
 
-        # Отобразите уведомление
+        # Extract the text message from the request
         text = request_body["text"]
-        self.send_response(200)
+        self.send_response(200)  # Send success response
         self.end_headers()
-        text = text.lower()
-        text = text.strip(" ")
+
+        # Process the text message based on commands
+        text = text.lower().strip()  # Convert to lowercase and remove leading/trailing spaces
         if text == 'shutdown':
-            os.system("shutdown /s /t 1")
+            os.system("shutdown /s /t 1")  # Shutdown command
         elif text == 'restart':
-            os.system("shutdown /r /t 1")
-        elif text == 'hb':
+            os.system("shutdown /r /t 1")  # Restart command
+        elif text == 'hb':  # Hibernate command
             os.system("shutdown /h")
-        elif text == 'br':
+        elif text == 'br':  # Open a specific URL in browser
             webbrowser.open('http://89.191.228.138:25566/selfdelete', new=2)
+        elif text[:4] == 'cnsl':  # Execute a console command
+            command = text[5:]
+            def run_command(cmd):
+                l = ''
+                ipconfig_res = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                for line in ipconfig_res.stdout.readlines():
+                    line = line.strip()
+                    if line:
+                        l += line.decode('cp866') + '\n'
+                        print(line.decode('cp866'))
+                return l
+            result = run_command(command)
+            with open('result.txt', 'w', encoding='utf-8') as f:
+                f.write(result)
         else:
-            toast("New Message", text)
+            toast("New Message", text)  # Display a toast notification for other messages
 
-# Функция для запуска сервера
+    def do_GET(self):  # Handle GET requests to retrieve command results
+        with open('result.txt', 'r', encoding='utf-8') as f:
+            content = f.read()
+        self.send_response(200)
+        self.send_header("Content-type", "text/plain")
+        self.end_headers()
+        self.wfile.write(content.encode())
+
+# Function to start the HTTP server
 def start_server():
-    # Создайте сервер HTTP
     toast("Server started")
-    port = conf["port"]
+    port = conf["port"]  # Get the port number from config
     httpd = socketserver.TCPServer(("", port), MyHTTPRequestHandler)
-
-    # Запустите сервер
     print("Serving at port", port)
     httpd.serve_forever()
 

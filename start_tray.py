@@ -4,6 +4,13 @@ import os
 
 conf = json.load(open('config.json'))
 if conf["firststart"]:
+    import socket
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("8.8.8.8", 80))
+    conf["lip"] = s.getsockname()[0]
+    with open('config.json', 'w') as f:
+        json.dump(conf, f)
+    s.close()
     from colorama import Fore
     print(f'{Fore.YELLOW}First start. Do you want to configure config?{Fore.RESET} (y/n)')
     if input() == 'y':

@@ -113,7 +113,7 @@ This project provides a way to control your PC remotely using HTTP requests. You
 
 ## Additional Notes
 
-* **Apple Shortcut Integration:** Requires downloading a specific shortcut from the GitHub repository for easy control from your iPhone. [here](https://www.icloud.com/shortcuts/890fc220ea354f9a90f02bade2189f81)
+* **Apple Shortcut Integration:** Requires downloading a specific shortcut from the GitHub repository for easy control from your iPhone. [here](https://www.icloud.com/shortcuts/a8531fc802994034b2198bc382af7844)
 * **Custom URL for `br` command:** You can modify the URL opened by the "br" command in the "server.py" file.
 
 ## Disclaimer

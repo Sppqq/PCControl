@@ -1,7 +1,9 @@
 import requests
+import json
 
 password = "123"
-text = "cnsl ping google.com"
+text = "screenshot"
+
 
 ip = 'localhost:10000'
 
@@ -14,5 +16,5 @@ headers = {
 data = {'password': password, 'text': text}
 response = requests.post(url, headers=headers, json=data)
 
-response = requests.get(url)
-print(response.text)
+# response = requests.get(url)
+# print(response.text)

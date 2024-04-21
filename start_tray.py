@@ -2,7 +2,26 @@ import subprocess
 import json
 import os
 
-conf = json.load(open('config.json'))
+if os.path.exists('config.json'):
+    conf = json.load(open('config.json'))
+else:
+    conf = {}
+    conf["firststart"] = True
+    conf["password"] = "123"
+    conf["port"] = 10000
+    with open('config.json', 'w') as f:
+        json.dump(conf, f)
+    subprocess.call(['python', 'fs.py'])
+    os.remove('fs.py')
+
+    g = input("Have you installed the libraries from requirements.txt? If not, write 'n' and they will be installed (y/n)\n")
+
+    conf = json.load(open('config.json'))
+    if g == 'n':
+        subprocess.call(['pip', 'install', '-r', 'requirements.txt'])
+
+    os.remove('requirements.txt')
+
 if conf["firststart"]:
     import socket
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -57,6 +76,3 @@ server_script = os.path.join(os.path.dirname(__file__), "tray.py")
 
 # Запустите сервер в фоновом режиме
 subprocess.Popen(["python", server_script], creationflags=subprocess.CREATE_NO_WINDOW)
-
-# Добавьте код для создания значка в трее и управления сервером
-# (как в предыдущем примере с pystray)

@@ -1,13 +1,12 @@
-from flask import Flask, request, jsonify, send_file
 import os
 import json
+from flask import Flask, request, jsonify, send_file
 import webbrowser
 import subprocess
 from win11toast import toast as toastt
 import pyautogui
 
-# Load configuration from config.json
-conf = json.load(open('config.json'))
+conf = json.load(open("config.json"))
 
 # Function to display toast notifications if enabled in config
 def toast(*args):
@@ -77,6 +76,7 @@ def handle_get():
         with open('result.txt', 'r', encoding='utf-8') as f:
             content = f.read()
         return content, 200
+
 
 if __name__ == "__main__":
     toast("Server started")

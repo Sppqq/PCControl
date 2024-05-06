@@ -50,7 +50,7 @@ This project provides a way to control your PC remotely using HTTP requests. You
 2. **Install dependencies:** Navigate to the project directory and run `pip install -r requirements.txt` to install the required libraries.
 3. **Run the start tray script:** Execute `start start_tray.py` to start the server and create a tray icon for control.
 
-![Tray Icon](https://cdn.discordapp.com/attachments/1045023444980473958/1226890642555146300/image.png?ex=662669f3&is=6613f4f3&hm=1ba37e2955dcd0405e59918dc638dc0b83db870362da882b5cc90cdd8774d4c2&)
+![Tray Icon](https://cdn.discordapp.com/attachments/1045023444980473958/1226890642555146300/image.png?ex=663a3073&is=6638def3&hm=e499896ae8e794c2000387e3222b3a542d01b77d4ce2ecfea039ca01900c19d2&)
 
 4. **Configure settings (First Run):**
     * You'll be prompted to configure options like:

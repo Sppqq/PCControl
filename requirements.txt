@@ -1,8 +1,6 @@
 win11toast
-http
-socketserver
-json
-webbrowser
 colorama
-winreg
 requests
+flask
+pyautogui
+pystray
